@@ -1,0 +1,1402 @@
+From 6506a6a9e6390bb471e8b5622cdb54989b8910d6 Mon Sep 17 00:00:00 2001
+From: auto3000 <auto3000@users.noreply.github.com>
+Date: Fri, 17 Aug 2018 08:47:18 +0200
+Subject: [PATCH] lv2: update modgui and .TTL resources
+
+These resources have been backported from updates found from
+https://github.com/moddevices/mod-lv2-data at commit
+bc731ed68c44227530625592fb3ca7a687531771.
+
+Signed-off-by: auto3000 <auto3000@users.noreply.github.com>
+---
+ CMakeLists.txt                |   6 +-
+ artyfx.lv2/bitta.ttl          |  22 +--
+ artyfx.lv2/capta.ttl          |  11 +-
+ artyfx.lv2/default-preset.ttl |  52 ++++++
+ artyfx.lv2/della.ttl          |  19 +-
+ artyfx.lv2/ducka.ttl          |  28 ++-
+ artyfx.lv2/filta.ttl          |  28 ++-
+ artyfx.lv2/friza.ttl          |   9 +-
+ artyfx.lv2/kuiza.ttl          |  27 ++-
+ artyfx.lv2/manifest.ttl       |  98 ++++++-----
+ artyfx.lv2/masha.ttl          |  56 ++----
+ artyfx.lv2/modguis.ttl        | 393 ++++++++++++++++++++++++++++++++++++++++++
+ artyfx.lv2/panda.ttl          |  17 +-
+ artyfx.lv2/roomy.ttl          |  14 +-
+ artyfx.lv2/satma.ttl          |  12 +-
+ artyfx.lv2/vihda.ttl          |  12 +-
+ artyfx.lv2/whaaa.ttl          |  13 +-
+ 17 files changed, 600 insertions(+), 217 deletions(-)
+ create mode 100644 artyfx.lv2/default-preset.ttl
+ create mode 100644 artyfx.lv2/modguis.ttl
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1c290ba..f3c6f58 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -97,8 +97,4 @@ set_target_properties(artyfx PROPERTIES PREFIX "")
+ # add the install targets
+ install (TARGETS artyfx    DESTINATION lib/lv2/artyfx.lv2/)
+ 
+-FILE(GLOB modF "artyfx.lv2/modgui/*")
+-FILE(GLOB ttls "artyfx.lv2/*.ttl"   )
+-
+-install(FILES     ${modF} DESTINATION lib/lv2/artyfx.lv2/modgui/)
+-install(FILES     ${ttls} DESTINATION lib/lv2/artyfx.lv2/)
++install(DIRECTORY artyfx.lv2 DESTINATION lib/lv2/)
+diff --git a/artyfx.lv2/bitta.ttl b/artyfx.lv2/bitta.ttl
+index 7b3b17f..e5a563b 100644
+--- a/artyfx.lv2/bitta.ttl
++++ b/artyfx.lv2/bitta.ttl
+@@ -24,38 +24,34 @@
+ @prefix atom:   <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui:     <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time:   <http://lv2plug.in/ns/ext/time#> .
+-@prefix mod:    <http://portalmod.com/ns/modgui#>.
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#bitta/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#bitta>
+   a lv2:Plugin,
+     lv2:DistortionPlugin;
+-  
++
+   doap:name "Bitta";
+   doap:description "Bit Crusher";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+ 
+   rdfs:comment "Bit crushing causes bit-reduction type distortion";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV" ;
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+-  
++
+   lv2:optionalFeature lv2:hardRTCapable ;
+-  
++
+   ui:ui <http://www.openavproductions.com/artyfx#bitta/gui>;
+-  
++
+   lv2:requiredFeature <http://lv2plug.in/ns/ext/urid#map> ;
+-  
++
+   lv2:port [
+       a lv2:InputPort, lv2:AudioPort ;
+       lv2:index 0 ;
+diff --git a/artyfx.lv2/capta.ttl b/artyfx.lv2/capta.ttl
+index 7bbd5d1..30cd10b 100644
+--- a/artyfx.lv2/capta.ttl
++++ b/artyfx.lv2/capta.ttl
+@@ -20,7 +20,6 @@
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ @prefix epp: <http://lv2plug.in/ns/ext/port-props#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+-@prefix mod: <http://portalmod.com/ns/modgui#>.
+ @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+ @prefix midi:  <http://lv2plug.in/ns/ext/midi#> .
+ @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
+@@ -29,8 +28,8 @@
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#capta>
+   a lv2:Plugin;
+@@ -47,12 +46,6 @@
+   ui:ui <http://www.openavproductions.com/artyfx#capta/gui>;
+   
+   lv2:optionalFeature lv2:hardRTCapable ;
+-  
+-    doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+ 
+   rdfs:comment """
+   Capta is a 4 track recording plugin. It streams the incoming audio to a file
+diff --git a/artyfx.lv2/default-preset.ttl b/artyfx.lv2/default-preset.ttl
+new file mode 100644
+index 0000000..aadfafa
+--- /dev/null
++++ b/artyfx.lv2/default-preset.ttl
+@@ -0,0 +1,52 @@
++@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
++@prefix pset:  <http://lv2plug.in/ns/ext/presets#> .
++@prefix state: <http://lv2plug.in/ns/ext/state#> .
++
++<default-preset>
++	a pset:Preset ;
++	lv2:appliesTo <http://www.openavproductions.com/artyfx#filta> ;
++	lv2:port [
++		lv2:symbol "active" ;
++		pset:value 1.0
++	] , [
++		lv2:symbol "frequency_control" ;
++		pset:value 0.5
++	] .
++
++<default-preset_1>
++	a pset:Preset ;
++	lv2:appliesTo <http://www.openavproductions.com/artyfx#kuiza> ;
++	lv2:port [
++		lv2:symbol "Hi_Mid" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "High" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "Level" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "Lo_Mid" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "Low" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "active" ;
++		pset:value 1.0
++	] .
++
++<default-preset_2>
++	a pset:Preset ;
++	lv2:appliesTo <http://www.openavproductions.com/artyfx#roomy> ;
++	lv2:port [
++		lv2:symbol "damping" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "dry_wet" ;
++		pset:value 0.5
++	] , [
++		lv2:symbol "time" ;
++		pset:value 0.5
++	] .
++
+diff --git a/artyfx.lv2/della.ttl b/artyfx.lv2/della.ttl
+index 0bf59bf..a47ea5b 100644
+--- a/artyfx.lv2/della.ttl
++++ b/artyfx.lv2/della.ttl
+@@ -24,39 +24,34 @@
+ @prefix atom:   <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui:     <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time:   <http://lv2plug.in/ns/ext/time#> .
+-@prefix mod:    <http://portalmod.com/ns/modgui#>.
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ 
+ <http://www.openavproductions.com/artyfx#della/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+-  ui:requiredFeature ui:makeResident;
++  
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  lv2:extensionData ui:idleInterface .
++  lv2:extensionData   ui:idleInterface .
+ 
+ <http://www.openavproductions.com/artyfx#della>
+   a lv2:Plugin ,
+     lv2:DelayPlugin ;
+-  
++
+   doap:name "Della";
+   doap:description "Delay (BPM adjusted)";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+-  
++
+   rdfs:comment "BPM dependant delay with feedback";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV" ;
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+ 
+ 
+ 
+   ui:ui <http://www.openavproductions.com/artyfx#della/gui>;
+-  
++
+   lv2:requiredFeature <http://lv2plug.in/ns/ext/urid#map> ;
+ 
+   lv2:port [
+diff --git a/artyfx.lv2/ducka.ttl b/artyfx.lv2/ducka.ttl
+index a7be1dd..dd0c066 100644
+--- a/artyfx.lv2/ducka.ttl
++++ b/artyfx.lv2/ducka.ttl
+@@ -22,35 +22,32 @@
+ @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time: <http://lv2plug.in/ns/ext/time#> .
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#ducka/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#ducka>
+   a lv2:Plugin ,
+     lv2:EnvelopePlugin ;
+   doap:name "Ducka";
+   doap:description "Side-chain Enveloper";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+ 
+   rdfs:comment "Sidechain envelope plugin, changes the volume of the main audio based on the amplitude of a sidechain signal.";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV";
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+ 
+ 
+-  
++
+   ui:ui <http://www.openavproductions.com/artyfx#ducka/gui>;
+-  
++
+   lv2:port [
+     a lv2:AudioPort ,
+       lv2:InputPort ;
+@@ -82,9 +79,9 @@
+     lv2:symbol "out_right" ;
+     lv2:name "Output Right";
+   ]
+-  
++
+   ,
+-  
++
+   [
+     a lv2:InputPort ,
+       lv2:ControlPort ;
+@@ -113,9 +110,9 @@
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+   ]
+-  
++
+   ,
+-  
++
+   [
+     a lv2:OutputPort ,
+       lv2:ControlPort ;
+@@ -126,9 +123,9 @@
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+   ]
+-  
++
+   ,
+-  
++
+   [
+     a lv2:InputPort ,
+       atom:AtomPort ;
+@@ -139,4 +136,3 @@
+     lv2:name "Control"
+   ]
+   .
+-
+diff --git a/artyfx.lv2/filta.ttl b/artyfx.lv2/filta.ttl
+index f6c9280..79d7975 100644
+--- a/artyfx.lv2/filta.ttl
++++ b/artyfx.lv2/filta.ttl
+@@ -20,37 +20,32 @@
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ @prefix epp: <http://lv2plug.in/ns/ext/port-props#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+-@prefix mod: <http://portalmod.com/ns/modgui#>.
+ @prefix pprop:  <http://lv2plug.in/ns/ext/port-props#>.
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#filta/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#filta>
+   a lv2:Plugin ,
+     lv2:FilterPlugin ;
+-  
++
+   doap:name "Filta";
+   doap:description "Lowpass/Highpass Filter";
+-  
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   rdfs:comment "Highpass lowpass filter combination.";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV";
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+-  
++
+   lv2:optionalFeature lv2:hardRTCapable;
+-  
++
+   ui:ui <http://www.openavproductions.com/artyfx#filta/gui>;
+-  
++
+   lv2:port [
+     a lv2:AudioPort ,
+       lv2:InputPort ;
+@@ -76,15 +71,16 @@
+     lv2:symbol "out_right" ;
+     lv2:name "Output Right";
+   ]
+-  
++
+   ,
+-  
++
+   [
+     a lv2:InputPort ,
+       lv2:ControlPort ;
+     lv2:index 4 ;
+     lv2:symbol "frequency_control" ;
+     lv2:name "Frequency Control";
++    lv2:shortName "Frequency" ;
+     lv2:default 0.5 ;
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+@@ -100,5 +96,5 @@
+     lv2:portProperty lv2:toggled ;
+     lv2:portProperty pprop:notOnGUI ;
+   ]
+-  
++
+   .
+diff --git a/artyfx.lv2/friza.ttl b/artyfx.lv2/friza.ttl
+index 333d11e..97d6630 100644
+--- a/artyfx.lv2/friza.ttl
++++ b/artyfx.lv2/friza.ttl
+@@ -26,18 +26,13 @@
+   a ui:X11UI;
+   ui:binary <artyfx.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#friza>
+   a lv2:Plugin;
+   doap:name "Friza";
+   doap:description "Sonic-Freezer";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   
+   rdfs:comment "A sonic texture freezer that allows moving over recorded content to achieve an ambient fade effect.";
+diff --git a/artyfx.lv2/kuiza.ttl b/artyfx.lv2/kuiza.ttl
+index 0350960..8f4f16d 100644
+--- a/artyfx.lv2/kuiza.ttl
++++ b/artyfx.lv2/kuiza.ttl
+@@ -21,34 +21,31 @@
+ @prefix epp: <http://lv2plug.in/ns/ext/port-props#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix pprop:  <http://lv2plug.in/ns/ext/port-props#>.
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#kuiza/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++
+ 
+ <http://www.openavproductions.com/artyfx#kuiza>
+   a lv2:Plugin ,
+     lv2:EQPlugin ;
+-  
++
+   doap:name "Kuiza";
+   doap:description "4-band Fixed Parameteric EQ";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+-  
++
+   rdfs:comment "A 4 band equalizer with preset bands.";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV";
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+ 
+   ui:ui <http://www.openavproductions.com/artyfx#kuiza/gui>;
+-  
++
+   lv2:requiredFeature <http://lv2plug.in/ns/ext/urid#map> ;
+ 
+   lv2:port [
+@@ -65,7 +62,7 @@
+       a lv2:InputPort, lv2:ControlPort ;
+       lv2:index 2 ;
+       lv2:name "Gain" ;
+-      lv2:symbol "gain" ;
++      lv2:symbol "Level" ;
+       lv2:default 0.500000 ;
+       lv2:minimum 0.000000 ;
+       lv2:maximum 1.000000 ;
+@@ -73,7 +70,7 @@
+       a lv2:InputPort, lv2:ControlPort ;
+       lv2:index 3 ;
+       lv2:name "Low Gain" ;
+-      lv2:symbol "gain_1" ;
++      lv2:symbol "Low" ;
+       lv2:default 0.500000 ;
+       lv2:minimum 0.000000 ;
+       lv2:maximum 1.000000 ;
+@@ -81,7 +78,7 @@
+       a lv2:InputPort, lv2:ControlPort ;
+       lv2:index 4 ;
+       lv2:name "LoMid Gain" ;
+-      lv2:symbol "gain_2" ;
++      lv2:symbol "Lo_Mid" ;
+       lv2:default 0.500000 ;
+       lv2:minimum 0.000000 ;
+       lv2:maximum 1.000000 ;
+@@ -89,7 +86,7 @@
+       a lv2:InputPort, lv2:ControlPort ;
+       lv2:index 5 ;
+       lv2:name "HiMid Gain" ;
+-      lv2:symbol "gain_3" ;
++      lv2:symbol "Hi_Mid" ;
+       lv2:default 0.500000 ;
+       lv2:minimum 0.000000 ;
+       lv2:maximum 1.000000 ;
+@@ -97,7 +94,7 @@
+       a lv2:InputPort, lv2:ControlPort ;
+       lv2:index 6 ;
+       lv2:name "High Gain" ;
+-      lv2:symbol "gain_4" ;
++      lv2:symbol "High" ;
+       lv2:default 0.500000 ;
+       lv2:minimum 0.000000 ;
+       lv2:maximum 1.000000 ;
+diff --git a/artyfx.lv2/manifest.ttl b/artyfx.lv2/manifest.ttl
+index 6a76ea1..2ebe7bd 100644
+--- a/artyfx.lv2/manifest.ttl
++++ b/artyfx.lv2/manifest.ttl
+@@ -1,65 +1,83 @@
+ 
+ # The manifest file for all OpenAV ArtyFX plugins
+ 
++@prefix doap: <http://usefulinc.com/ns/doap#> .
++@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+ @prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ 
+-<http://www.openavproductions.com/artyfx#bitta> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <bitta.ttl> .
++<http://www.openavproductions.com/artyfx>
++  a doap:Project;
++  doap:maintainer [
++      foaf:homepage <http://openavproductions.com>; 
++      foaf:mbox <mailto:harryhaaren@gmail.com>;
++      foaf:name "OpenAV"
++  ].
+ 
+-# Not tested to standard yet - do not package
+-#<http://www.openavproductions.com/artyfx#capta> a lv2:Plugin ;
+-#  lv2:binary <artyfx.so> ;
+-#  rdfs:seeAlso <capta.ttl> .
++# <http://www.openavproductions.com/artyfx#bitta> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <bitta.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#della> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <della.ttl> .
++# <http://www.openavproductions.com/artyfx#della> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <della.ttl> , <modguis.ttl> .
+ 
+-# Unfinished for this release - NOT ready for testing / usage.
+-#<http://www.openavproductions.com/artyfx#driva> a lv2:Plugin ;
+-#  lv2:binary <artyfx.so> ;
+-#  rdfs:seeAlso <driva.ttl> .
++# <http://www.openavproductions.com/artyfx#driva> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <driva.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#ducka> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <ducka.ttl> .
++# <http://www.openavproductions.com/artyfx#ducka> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <ducka.ttl> , <modguis.ttl> .
+ 
+ <http://www.openavproductions.com/artyfx#filta> a lv2:Plugin ;
+   lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <filta.ttl> .
+-
+-# Unfinished for this release - NOT ready for testing / usage.
+-#<http://www.openavproductions.com/artyfx#friza> a lv2:Plugin ;
+-#  lv2:binary <artyfx.so> ;
+-#  rdfs:seeAlso <friza.ttl> .
++  rdfs:seeAlso <filta.ttl> , <modguis.ttl> .
+ 
+ <http://www.openavproductions.com/artyfx#kuiza> a lv2:Plugin ;
+   lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <kuiza.ttl> .
++  rdfs:seeAlso <kuiza.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#masha> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <masha.ttl> .
++# <http://www.openavproductions.com/artyfx#masha> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <masha.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#panda> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <panda.ttl> .
++# <http://www.openavproductions.com/artyfx#panda> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <panda.ttl> , <modguis.ttl> .
+ 
+ <http://www.openavproductions.com/artyfx#roomy> a lv2:Plugin ;
+   lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <roomy.ttl> .
++  rdfs:seeAlso <roomy.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#satma> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <satma.ttl> .
++# <http://www.openavproductions.com/artyfx#satma> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <satma.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#vihda> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <vihda.ttl> .
++# <http://www.openavproductions.com/artyfx#vihda> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <vihda.ttl> , <modguis.ttl> .
+ 
+-<http://www.openavproductions.com/artyfx#whaaa> a lv2:Plugin ;
+-  lv2:binary <artyfx.so> ;
+-  rdfs:seeAlso <whaaa.ttl> .
++# <http://www.openavproductions.com/artyfx#whaaa> a lv2:Plugin ;
++#   lv2:binary <artyfx.so> ;
++#   rdfs:seeAlso <whaaa.ttl> , <modguis.ttl> .
++
++
++
++<default-preset>
++    a <http://lv2plug.in/ns/ext/presets#Preset> ;
++    <http://lv2plug.in/ns/lv2core#appliesTo> <http://www.openavproductions.com/artyfx#filta> ;
++    <http://www.w3.org/2000/01/rdf-schema#label> "Default" ;
++    <http://www.w3.org/2000/01/rdf-schema#seeAlso> <default-preset.ttl> .
++
++<default-preset_1>
++    a <http://lv2plug.in/ns/ext/presets#Preset> ;
++    <http://lv2plug.in/ns/lv2core#appliesTo> <http://www.openavproductions.com/artyfx#kuiza> ;
++    <http://www.w3.org/2000/01/rdf-schema#label> "Default" ;
++    <http://www.w3.org/2000/01/rdf-schema#seeAlso> <default-preset.ttl> .
+ 
++<default-preset_2>
++    a <http://lv2plug.in/ns/ext/presets#Preset> ;
++    <http://lv2plug.in/ns/lv2core#appliesTo> <http://www.openavproductions.com/artyfx#roomy> ;
++    <http://www.w3.org/2000/01/rdf-schema#label> "Default" ;
++    <http://www.w3.org/2000/01/rdf-schema#seeAlso> <default-preset.ttl> .
+diff --git a/artyfx.lv2/masha.ttl b/artyfx.lv2/masha.ttl
+index 9722bc8..940d3f4 100644
+--- a/artyfx.lv2/masha.ttl
++++ b/artyfx.lv2/masha.ttl
+@@ -23,32 +23,30 @@
+ @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time: <http://lv2plug.in/ns/ext/time#> .
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#masha/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#masha>
+   a lv2:Plugin ,
+     lv2:DelayPlugin ;
+   doap:name "Masha";
+   doap:description "Beat Smasher";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   rdfs:comment "A beat-stutter type effect.";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV";
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+ 
++
+   ui:ui <http://www.openavproductions.com/artyfx#masha/gui>;
+-  
++
+   lv2:port [
+     a lv2:AudioPort ,
+       lv2:InputPort ;
+@@ -74,9 +72,9 @@
+     lv2:symbol "out_right" ;
+     lv2:name "Output Right";
+   ]
+-  
++
+   ,
+-  
++
+   [
+     a lv2:InputPort ,
+       lv2:ControlPort ;
+@@ -91,7 +89,7 @@
+       lv2:ControlPort ;
+     lv2:index 5 ;
+     lv2:symbol "amplitude" ;
+-    lv2:name "Volume";
++    lv2:name "Amplitude";
+     lv2:default 1.0 ;
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+@@ -100,27 +98,28 @@
+       lv2:ControlPort ;
+     lv2:index 6 ;
+     lv2:symbol "dry_wet" ;
+-    lv2:name "Passthrough";
++    lv2:name "Dry Wet Mix";
+     lv2:default 1.0 ;
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+   ]
+-  
++
+   ,
+-  
++
+   [
+     a lv2:InputPort ,
+       lv2:ControlPort ;
+     lv2:index 7 ;
+     lv2:symbol "active" ;
+-    lv2:name "Start";
++    lv2:name "Active";
+     lv2:default 1.0 ;
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+     lv2:portProperty lv2:toggled ;
++    lv2:portProperty pprop:notOnGUI ;
+   ]
+   ,
+-  
++
+   [
+     a lv2:InputPort ,
+       atom:AtomPort ;
+@@ -130,29 +129,4 @@
+     lv2:symbol "control" ;
+     lv2:name "Control"
+   ]
+-  ,
+-  [
+-    a lv2:InputPort ,
+-      lv2:ControlPort ;
+-    lv2:index 9 ;
+-    lv2:portProperty lv2:connectionOptional;
+-    lv2:symbol "bpm_from_host" ;
+-    lv2:name "BPM from Host";
+-    lv2:default 1.0 ;
+-    lv2:minimum 0.0 ;
+-    lv2:maximum 1.0 ;
+-    lv2:portProperty lv2:toggled;
+-  ]
+-  ,
+-  [
+-    a lv2:InputPort ,
+-      lv2:ControlPort ;
+-    lv2:index 10 ;
+-    lv2:portProperty lv2:connectionOptional;
+-    lv2:symbol "bpm_manual" ;
+-    lv2:name "BPM Manual";
+-    lv2:default 120.0 ;
+-    lv2:minimum 40.0 ;
+-    lv2:maximum 240.0 ;
+-  ]
+   .
+diff --git a/artyfx.lv2/modguis.ttl b/artyfx.lv2/modguis.ttl
+new file mode 100644
+index 0000000..5744573
+--- /dev/null
++++ b/artyfx.lv2/modguis.ttl
+@@ -0,0 +1,393 @@
++@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
++@prefix modgui: <http://moddevices.com/ns/modgui#> .
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#bitta
++
++<http://www.openavproductions.com/artyfx#bitta>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-bitta.html> ;
++        modgui:stylesheet <modgui/stylesheet-bitta.css> ;
++        modgui:screenshot <modgui/screenshot-bitta.png> ;
++        modgui:thumbnail <modgui/thumbnail-bitta.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Bitta" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "crush" ;
++            lv2:name "Crush" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "drywet" ;
++            lv2:name "Mix" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#bitta
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#della
++
++<http://www.openavproductions.com/artyfx#della>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-della.html> ;
++        modgui:stylesheet <modgui/stylesheet-della.css> ;
++        modgui:screenshot <modgui/screenshot-della.png> ;
++        modgui:thumbnail <modgui/thumbnail-della.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Della" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "time" ;
++            lv2:name "Time" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "feedback" ;
++            lv2:name "Feedback" ;
++        ] , [
++            lv2:index 2 ;
++            lv2:symbol "volume" ;
++            lv2:name "Level" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#della
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#driva
++
++<http://www.openavproductions.com/artyfx#driva>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-driva.html> ;
++        modgui:stylesheet <modgui/stylesheet-driva.css> ;
++        modgui:screenshot <modgui/screenshot-driva.png> ;
++        modgui:thumbnail <modgui/thumbnail-driva.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Driva" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "tone" ;
++            lv2:name "Tone" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "distortion" ;
++            lv2:name "Distortion" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#driva
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#ducka
++
++<http://www.openavproductions.com/artyfx#ducka>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-ducka.html> ;
++        modgui:stylesheet <modgui/stylesheet-ducka.css> ;
++        modgui:screenshot <modgui/screenshot-ducka.png> ;
++        modgui:thumbnail <modgui/thumbnail-ducka.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Ducka" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "threshold" ;
++            lv2:name "Thresh" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "reduction" ;
++            lv2:name "Reduction" ;
++        ] , [
++            lv2:index 2 ;
++            lv2:symbol "release_time" ;
++            lv2:name "Release" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#ducka
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#filta
++
++<http://www.openavproductions.com/artyfx#filta>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-filta.html> ;
++        modgui:stylesheet <modgui/stylesheet-filta.css> ;
++        modgui:screenshot <modgui/screenshot-filta.png> ;
++        modgui:thumbnail <modgui/thumbnail-filta.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Filta" ;
++        modgui:model "boxy" ;
++        modgui:panel "1-knob" ;
++        modgui:color "darkblue" ;
++        modgui:knob "bronze" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "frequency_control" ;
++            lv2:name "Frequency" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#filta
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#kuiza
++
++<http://www.openavproductions.com/artyfx#kuiza>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-kuiza.html> ;
++        modgui:stylesheet <modgui/stylesheet-kuiza.css> ;
++        modgui:screenshot <modgui/screenshot-kuiza.png> ;
++        modgui:thumbnail <modgui/thumbnail-kuiza.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Kuiza" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "Low" ;
++            lv2:name "Low" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "Lo_Mid" ;
++            lv2:name "LoMid" ;
++        ] , [
++            lv2:index 2 ;
++            lv2:symbol "Hi_Mid" ;
++            lv2:name "HiMid" ;
++        ] , [
++            lv2:index 3 ;
++            lv2:symbol "High" ;
++            lv2:name "High" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#kuiza
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#masha
++
++<http://www.openavproductions.com/artyfx#masha>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-masha.html> ;
++        modgui:stylesheet <modgui/stylesheet-masha.css> ;
++        modgui:screenshot <modgui/screenshot-masha.png> ;
++        modgui:thumbnail <modgui/thumbnail-masha.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Masha" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "time" ;
++            lv2:name "Time" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "amplitude" ;
++            lv2:name "Level" ;
++        ] , [
++            lv2:index 2 ;
++            lv2:symbol "dry_wet" ;
++            lv2:name "Mix" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#masha
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#panda
++
++<http://www.openavproductions.com/artyfx#panda>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-panda.html> ;
++        modgui:stylesheet <modgui/stylesheet-panda.css> ;
++        modgui:screenshot <modgui/screenshot-panda.png> ;
++        modgui:thumbnail <modgui/thumbnail-panda.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Panda" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "threshold" ;
++            lv2:name "Thresh" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "factor" ;
++            lv2:name "Ratio" ;
++        ] , [
++            lv2:index 2 ;
++            lv2:symbol "attack" ;
++            lv2:name "Attack" ;
++        ] , [
++            lv2:index 3 ;
++            lv2:symbol "release" ;
++            lv2:name "Release" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#panda
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#roomy
++
++<http://www.openavproductions.com/artyfx#roomy>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-roomy.html> ;
++        modgui:stylesheet <modgui/stylesheet-roomy.css> ;
++        modgui:screenshot <modgui/screenshot-roomy.png> ;
++        modgui:thumbnail <modgui/thumbnail-roomy.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Roomy" ;
++        modgui:model "boxy" ;
++        modgui:panel "3-knobs" ;
++        modgui:color "cream" ;
++        modgui:knob "black" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "time" ;
++            lv2:name "Decay" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "damping" ;
++            lv2:name "Damping" ;
++        ] , [
++            lv2:index 2 ;
++            lv2:symbol "dry_wet" ;
++            lv2:name "Mix" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#roomy
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#satma
++
++<http://www.openavproductions.com/artyfx#satma>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-satma.html> ;
++        modgui:stylesheet <modgui/stylesheet-satma.css> ;
++        modgui:screenshot <modgui/screenshot-satma.png> ;
++        modgui:thumbnail <modgui/thumbnail-satma.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Satma" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "distort" ;
++            lv2:name "Drive" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "tone" ;
++            lv2:name "Tone" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#satma
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#vihda
++
++<http://www.openavproductions.com/artyfx#vihda>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-vihda.html> ;
++        modgui:stylesheet <modgui/stylesheet-vihda.css> ;
++        modgui:screenshot <modgui/screenshot-vihda.png> ;
++        modgui:thumbnail <modgui/thumbnail-vihda.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Vihda" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "width" ;
++            lv2:name "Width" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "invert" ;
++            lv2:name "Invert" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#vihda
++###############################################################################
++
++###############################################################################
++## START http://www.openavproductions.com/artyfx#whaaa
++
++@prefix modgui: <http://moddevices.com/ns/modgui#> .
++@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
++
++<http://www.openavproductions.com/artyfx#whaaa>
++    modgui:gui [
++        modgui:resourcesDirectory <modgui> ;
++        modgui:iconTemplate <modgui/icon-whaaa.html> ;
++        modgui:stylesheet <modgui/stylesheet-whaaa.css> ;
++        modgui:screenshot <modgui/screenshot-whaaa.png> ;
++        modgui:thumbnail <modgui/thumbnail-whaaa.png> ;
++        modgui:brand "OpenAV" ;
++        modgui:label "Whaaa" ;
++        modgui:model "japanese" ;
++        modgui:panel "4-knobs" ;
++        modgui:color "darkblue" ;
++        modgui:knob "orange" ;
++        modgui:port [
++            lv2:index 0 ;
++            lv2:symbol "freq" ;
++            lv2:name "Freq" ;
++        ] , [
++            lv2:index 1 ;
++            lv2:symbol "mix" ;
++            lv2:name "Mix" ;
++        ] ;
++    ] .
++    
++## END http://www.openavproductions.com/artyfx#whaaa
++###############################################################################
+diff --git a/artyfx.lv2/panda.ttl b/artyfx.lv2/panda.ttl
+index 8a74c68..506d58e 100644
+--- a/artyfx.lv2/panda.ttl
++++ b/artyfx.lv2/panda.ttl
+@@ -24,33 +24,30 @@
+ @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time: <http://lv2plug.in/ns/ext/time#> .
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#panda/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#panda>
+   a lv2:Plugin;
+-  
++
+   doap:name "Panda";
+   doap:description "Compressor/Expander Combo";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   rdfs:comment "A compressor expander limiter that can squeeze the dynamics out of any signal.";
+   lv2:minorVersion 2; lv2:microVersion 0;
++  mod:brand "OpenAV";
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+ 
+- 
++
+   ui:ui <http://www.openavproductions.com/artyfx#panda/gui>;
+-  
++
+   lv2:requiredFeature <http://lv2plug.in/ns/ext/urid#map> ;
+ 
+   lv2:port [
+diff --git a/artyfx.lv2/roomy.ttl b/artyfx.lv2/roomy.ttl
+index de9a827..2f20e0e 100644
+--- a/artyfx.lv2/roomy.ttl
++++ b/artyfx.lv2/roomy.ttl
+@@ -20,30 +20,26 @@
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ @prefix epp: <http://lv2plug.in/ns/ext/port-props#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#roomy/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#roomy>
+   a lv2:Plugin ,
+     lv2:ReverbPlugin ;
+   doap:name "Roomy";
+   doap:description "Spacious Reverb";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   rdfs:comment "A spacious open algorithmic reverb.";
+   lv2:minorVersion 2; lv2:microVersion 0;
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+-
++  mod:brand "OpenAV" ;
+  
+   ui:ui <http://www.openavproductions.com/artyfx#roomy/gui>;
+   
+@@ -81,6 +77,7 @@
+     lv2:index 4 ;
+     lv2:symbol "time" ;
+     lv2:name "Time";
++    lv2:shortName "Decay" ;
+     lv2:default 0.5 ;
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+@@ -99,6 +96,7 @@
+     lv2:index 6 ;
+     lv2:symbol "dry_wet" ;
+     lv2:name "Dry Wet Mix";
++    lv2:shortName "Mix" ;
+     lv2:default 0.5 ;
+     lv2:minimum 0.0 ;
+     lv2:maximum 1.0 ;
+diff --git a/artyfx.lv2/satma.ttl b/artyfx.lv2/satma.ttl
+index 511ab81..577cc5a 100644
+--- a/artyfx.lv2/satma.ttl
++++ b/artyfx.lv2/satma.ttl
+@@ -21,13 +21,14 @@
+ @prefix epp: <http://lv2plug.in/ns/ext/port-props#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix pprop:  <http://lv2plug.in/ns/ext/port-props#>.
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#satma/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#satma>
+   a lv2:Plugin ,
+@@ -35,17 +36,12 @@
+   
+   doap:name "Satma";
+   doap:description "Distortion Maximizer";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   rdfs:comment "A distortion maximizer effect.";
+   lv2:minorVersion 2; lv2:microVersion 0;
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+-
++  mod:brand "OpenAV" ;
+ 
+   ui:ui <http://www.openavproductions.com/artyfx#satma/gui>;
+   
+diff --git a/artyfx.lv2/vihda.ttl b/artyfx.lv2/vihda.ttl
+index 21d7d63..f059ba7 100644
+--- a/artyfx.lv2/vihda.ttl
++++ b/artyfx.lv2/vihda.ttl
+@@ -24,30 +24,26 @@
+ @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time: <http://lv2plug.in/ns/ext/time#> .
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#vihda/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#vihda>
+   a lv2:Plugin;
+   
+   doap:name "Vihda";
+   doap:description "Stereo Widener";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   rdfs:comment "A stereo widener plugin based on a mid-side matrix with inversion of the right channel.";
+   lv2:minorVersion 2; lv2:microVersion 0;
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+-
++  mod:brand "OpenAV" ;
+ 
+   ui:ui <http://www.openavproductions.com/artyfx#vihda/gui>;
+   
+diff --git a/artyfx.lv2/whaaa.ttl b/artyfx.lv2/whaaa.ttl
+index a16e1d9..ace5f46 100644
+--- a/artyfx.lv2/whaaa.ttl
++++ b/artyfx.lv2/whaaa.ttl
+@@ -20,34 +20,29 @@
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ @prefix epp: <http://lv2plug.in/ns/ext/port-props#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+-
+ @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+ @prefix ui: <http://lv2plug.in/ns/extensions/ui#>.
+ @prefix time: <http://lv2plug.in/ns/ext/time#> .
++@prefix mod:    <http://moddevices.com/ns/mod#> .
+ 
+ <http://www.openavproductions.com/artyfx#whaaa/gui>
+   a ui:X11UI;
+   ui:binary <artyfx_ui.so>;
+   lv2:optionalFeature ui:noUserResize ;
+-  lv2:extensionData   ui:idleInterface ;
+-  ui:requiredFeature ui:makeResident.
++  lv2:extensionData   ui:idleInterface .
++  
+ 
+ <http://www.openavproductions.com/artyfx#whaaa>
+   a lv2:Plugin;
+   
+   doap:name "Whaaa";
+   doap:description "Wah Pedal";
+-  doap:maintainer  [
+-      foaf:homepage <http://openavproductions.com>; 
+-      foaf:mbox <mailto:harryhaaren@gmail.com>;
+-      foaf:name "OpenAV"
+-  ];
+   lv2:optionalFeature lv2:hardRTCapable ;
+   rdfs:comment "A wah pedal.";
+   lv2:minorVersion 2; lv2:microVersion 0;
+   doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+   lv2:project <http://www.openavproductions.com/artyfx> ;
+-
++  mod:brand "OpenAV" ;
+ 
+   ui:ui <http://www.openavproductions.com/artyfx#whaaa/gui>;
+   
+-- 
+2.7.4
+
