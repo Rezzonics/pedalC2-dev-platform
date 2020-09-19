@@ -1,0 +1,4 @@
+SANITY_VERSION 1
+TMPDIR /home/delacruz/amlogic-bsp/build/tmp
+SSTATE_DIR /home/delacruz/amlogic-bsp/build/sstate-cache
+NATIVELSBSTRING ubuntu-18.04
