@@ -1,19 +1,21 @@
 # Standard pedalpi configuration defaults, inherited by all targets
-
-EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
-USER_CLASSES ?= "buildstats image-mklibs image-prelink"
-PATCHRESOLVE ?= "noop"
-LICENSE_FLAGS_WHITELIST  += "commercial"
+#EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+#USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+#PATCHRESOLVE ?= "noop"
+#LICENSE_FLAGS_WHITELIST  += "commercial"
 
 # Enable fortran
 FORTRAN_forcevariable = ",fortran"
 RUNTIMETARGET_append_pn-gcc-runtime = " libquadmath"
 
-DISTRO_FEATURES_remove = " wayland opengl pulseaudio opengles egl"
+#opengl
+DISTRO_FEATURES_remove = " wayland pulseaudio opengles egl bluez5"
 PACKAGECONFIG_pn-qtwebkit = " fontconfig "
 PACKAGECONFIG_DEFAULT_pn-qtbase_remove = " dbus udev evdev "
 PACKAGECONFIG_DEFAULT_pn-qtbase_append = " fontconfig "
 
+#             -no-opengl 
+#EXTRA_QMAKEVARS_PRE += "CONFIG+=-qt-zlib
 QT_CONFIG_FLAGS_pn-qtbase_append = " -qt-zlib \
              -qt-libpng \
              -qt-libjpeg \
@@ -25,7 +27,6 @@ QT_CONFIG_FLAGS_pn-qtbase_append = " -qt-zlib \
              -no-dbus \
              -no-gstreamer \
              -no-journald \
-             -no-opengl \
              -no-qml-debug \
              -no-sql-db2 \
              -no-sql-ibase \
@@ -36,4 +37,9 @@ QT_CONFIG_FLAGS_pn-qtbase_append = " -qt-zlib \
              -no-sql-sqlite \
              -no-sql-sqlite2 \
              -no-sql-tds \
-             -no-tslib "
+             -no-tslib \
+	${PACKAGECONFIG_CONFARGS}\
+	"
+FILES_${PN}-mkspecs = "\
+	${OE_QMAKE_PATH_ARCHDATA}/mkspecs"
+

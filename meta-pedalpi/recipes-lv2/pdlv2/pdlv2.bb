@@ -4,7 +4,7 @@ SECTION = "multimedia"
 LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://LICENSE-isc;md5=4361d033b4c93ba5f5e283c91bc993c9"
 
-DEPENDS = "lv2 xz-native libxml2-native libxslt-native pkgconfig-native ruby-native bundler-native"
+DEPENDS = "lv2 xz-native libxml2-native libxslt-native pkgconfig-native ruby-native bundler"
 
 SRCREV = "f8b8de956f649e481424b28cec9ca78174b21631"
 SRC_URI = "gitsm://github.com/moddevices/pdlv2.git \

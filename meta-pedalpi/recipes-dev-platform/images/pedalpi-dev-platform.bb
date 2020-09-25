@@ -1,7 +1,8 @@
 SUMMARY = "pedalpi complete image."
 
+#${ROOTFS_PKGMANAGE_BOOTSTRAP}
+
 IMAGE_INSTALL = "packagegroup-core-boot \
-	${ROOTFS_PKGMANAGE_BOOTSTRAP} \
 	${CORE_IMAGE_EXTRA_INSTALL} \
 	packagegroup-pedalpii"
 
