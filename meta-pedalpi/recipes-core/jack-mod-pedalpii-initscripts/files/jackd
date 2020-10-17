@@ -15,7 +15,7 @@
 # Defaults
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/jackd
-OPTIONS=" -P70 -p256 -t2000 -d alsa -dhw:0,0 -p 256 -n 3 -r 48000 -s "
+OPTIONS=" -P70 -p256 -t2000 -d alsa -Phw:0,0 -Chw:0,3 -p 256 -n 3 -r 48000 -s "
 START_DAEMON=yes
 OPTIONS="$OPTIONS"
 PIDFILE="/var/run/jackd.pid"
