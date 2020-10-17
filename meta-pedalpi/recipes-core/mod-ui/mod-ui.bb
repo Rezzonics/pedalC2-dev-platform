@@ -3,7 +3,6 @@ SECTION = "multimedia"
 
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b5abed640d912caca185601d2312815e"
-#python3-textutils 
 
 RDEPENDS_${PN} = "python3-json python3-setuptools python3-pyserial pystache python3-pillow python3-tornado"
 DEPENDS = "lilv jack alsa-lib"
@@ -26,11 +25,12 @@ SRC_URI = "git://github.com/moddevices/mod-ui.git;branch=master \
            file://0014-desktop-differentiate-two-similar-logging-messages.patch \
            file://0015-host-add-retry-mechanism-to-connect-mod-host-socket.patch \
            file://0016-logging-add-some-traces-in-utils-and-webserver.patch \
+           file://0017-webserver-do-not-wait-for-cc.patch \
            "
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} = "/usr/share/mod/ \
+FILES_${PN} = " /usr/share/mod/ \
 		/usr/bin/mod-ui"
 
 inherit setuptools3

@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "Stereo Routing Plugin"
 
 LICENSE = "GPLv2"

@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "LV2 plugins to filter midi events"
 
 LICENSE = "GPLv2"

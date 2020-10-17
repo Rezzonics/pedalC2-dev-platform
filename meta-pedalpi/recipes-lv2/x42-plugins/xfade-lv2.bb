@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "stereo DJ X-fade plugin"
 
 LICENSE = "GPLv2"

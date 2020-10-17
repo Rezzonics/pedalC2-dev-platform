@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "minimalistic gain control with small MOD GUI"
 
 LICENSE = "GPLv2"

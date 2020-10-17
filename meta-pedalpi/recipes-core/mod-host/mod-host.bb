@@ -1,13 +1,10 @@
 SUMMARY = "LV2 host for Jack controllable via socket or command line."
 SECTION = "multimedia"
 
+inherit pkgconfig 
+
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
-
-DEPENDS = "jack lilv readline fftwf "
-DEPENDS_armv7 += " ne10 "
-DEPENDS_aarch64 += " ne10 "
-RDEPENDS_${PN} = " jack-utils lilv "
 
 SRCREV = "1726ad06b11323da7e1aaed690ff8aef91f702b5"
 SRC_URI = "git://github.com/moddevices/mod-host.git \
@@ -19,18 +16,22 @@ SRC_URI = "git://github.com/moddevices/mod-host.git \
 	file://0006-jack-add-logging-hook-to-JACK-library.patch \
 	file://0007-logging-redirect-printf-to-logger.patch \
 	"
+DEPENDS = "jack lilv readline fftwf "
+DEPENDS_armv7 += " jack lilv readline fftwf ne10 "
+DEPENDS_aarch64 += " jack lilv readline fftwf ne10 "
+RDEPENDS_${PN} += " jack-utils lilv "
 
 FILES_${PN} = " /usr/bin/mod-host /usr/lib/jack/ "
 
 S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE = " PREFIX=/usr DESTDIR=${D} "
-EXTRA_OEMAKE_armv7 += " HAVE_NE10=true "
-EXTRA_OEMAKE_aarch64 += " HAVE_NE10=true "
+EXTRA_OEMAKE_armv7 += " PREFIX=/usr DESTDIR=${D} HAVE_NE10=true "
+EXTRA_OEMAKE_aarch64 += " PREFIX=/usr DESTDIR=${D} HAVE_NE10=true "
 
 do_install() {
         oe_runmake install
 }
 
-
+PV="0.10.6"
 

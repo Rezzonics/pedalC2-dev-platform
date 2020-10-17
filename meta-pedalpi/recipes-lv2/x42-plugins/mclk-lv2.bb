@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "Midi Clock Generator LV2 Plugin"
 
 LICENSE = "GPLv2"

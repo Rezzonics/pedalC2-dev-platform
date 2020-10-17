@@ -1,25 +1,24 @@
 SUMMARY = "pedalpi complete image."
 
-#${ROOTFS_PKGMANAGE_BOOTSTRAP}
-
-IMAGE_INSTALL = "packagegroup-core-boot \
+IMAGE_INSTALL += "packagegroup-core-boot \
+	packagegroup-pedalpii \
 	${CORE_IMAGE_EXTRA_INSTALL} \
-	packagegroup-pedalpii"
-
-IMAGE_LINGUAS = " "
-
-LICENSE = "MIT"
+"
 
 inherit core-image
 
-IMAGE_ROOTFS_SIZE ?= "8192"
-IMAGE_ROOTFS_EXTRA_SPACE_append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "" ,d)}"
+IMAGE_LINGUAS = " fr-fr en-us "
+
+LICENSE = "MIT"
+
+#IMAGE_ROOTFS_SIZE ?= "8192"
+#IMAGE_ROOTFS_EXTRA_SPACE_append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "" ,d)}"
 
 # Set default password for 'root' user
-inherit extrausers
-ROOTPASSWORD = "root"
-ROOTUSERNAME = "root"
-EXTRA_USERS_PARAMS ?= "usermod -P ${ROOTPASSWORD} ${ROOTUSERNAME};"
+#inherit extrausers
+#ROOTPASSWORD = "root"
+#ROOTUSERNAME = "root"
+#EXTRA_USERS_PARAMS ?= "usermod -P ${ROOTPASSWORD} ${ROOTUSERNAME};"
 
-PV ?= "snapshot+${DATE}"
+#PV ?= "snapshot+${DATE}"
 

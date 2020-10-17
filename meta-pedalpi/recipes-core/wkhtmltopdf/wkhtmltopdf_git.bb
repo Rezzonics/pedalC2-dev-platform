@@ -6,7 +6,7 @@ SRCREV = "6a57c1449797d6cb915921fb747f3ac36199241f"
 LICENSE = "LGPL-3.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=e6a600fd5e1d9cbde2d983680233ad02"
 
-DEPENDS = " qtbase qtwebkit qtsvg "
+DEPENDS = " qtbase qtwebengine qtsvg "
 RDEPENDS_${PN} = " \
             packagegroup-fonts-truetype-core \
             fontconfig \

@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "LV2 Control Port Parameter Filters -- modular synth blocks"
 
 SECTION = "multimedia"

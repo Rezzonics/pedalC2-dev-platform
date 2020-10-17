@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "Audio Signal Level Meter Plugin for the MOD"
 
 LICENSE = "GPLv2"

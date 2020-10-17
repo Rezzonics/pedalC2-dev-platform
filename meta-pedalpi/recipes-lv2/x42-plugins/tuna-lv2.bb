@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "Musical Instrument Tuner"
 
 LICENSE = "GPLv2"

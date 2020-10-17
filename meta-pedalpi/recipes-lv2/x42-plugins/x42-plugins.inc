@@ -1,5 +1,7 @@
 SECTION = "multimedia"
 
+inherit pkgconfig
+
 S = "${WORKDIR}/git"
 
 FILES_${PN} = " ${libdir}/lv2/ "

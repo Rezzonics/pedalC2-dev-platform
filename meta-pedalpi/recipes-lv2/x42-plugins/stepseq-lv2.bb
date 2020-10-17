@@ -1,5 +1,7 @@
 require x42-plugins.inc 
 
+inherit pkgconfig
+
 SUMMARY = "Simple Step Sequencer."
 
 LICENSE = "GPLv2"

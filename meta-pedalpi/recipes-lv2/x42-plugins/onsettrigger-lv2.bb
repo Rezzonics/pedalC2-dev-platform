@@ -1,5 +1,7 @@
 require x42-plugins.inc 
 
+inherit pkgconfig
+
 SUMMARY = "Audio to Midi Onset Trigger LV2 Plugin"
 
 LICENSE = "GPLv2"

@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "LV2 Midi Test Sequence Generator"
 
 LICENSE = "GPLv2"

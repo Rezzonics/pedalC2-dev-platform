@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "Fons Adriaensen's AT1 -- Autotune LV2 plugin."
 
 LICENSE = "GPLv2"

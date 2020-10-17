@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "4 Band Parametric EQ"
 
 SECTION = "multimedia"

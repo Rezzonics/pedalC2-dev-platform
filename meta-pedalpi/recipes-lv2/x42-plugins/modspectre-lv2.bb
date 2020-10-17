@@ -1,5 +1,7 @@
 require x42-plugins.inc
 
+inherit pkgconfig
+
 SUMMARY = "Crude FFT Spectrum Analyzer"
 
 LICENSE = "GPLv2"
