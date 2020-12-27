@@ -6,7 +6,7 @@ PATCHRESOLVE ?= "noop"
 LICENSE_FLAGS_WHITELIST  += "commercial"
 
 # MOD tools requires a legacy Tornado library
-PREFERRED_VERSION_python3-tornado = "4.2"
+PREFERRED_VERSION_python3-tornado = "4.3"
 
 # Enable fortran
 FORTRAN_forcevariable = ",fortran"
