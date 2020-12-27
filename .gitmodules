@@ -12,8 +12,8 @@
 	branch = morty
 [submodule "meta-pedalpi"]
 	path = meta-pedalpi
-	url = https://github.com/auto3000/meta-pedalpi
-	branch = zeus
+	url = https://github.com/rezzonics/meta-pedalpi
+	branch = main 
 [submodule "meta-omega"]
 	path = meta-omega
 	url = https://github.com/lcrb/meta-omega
