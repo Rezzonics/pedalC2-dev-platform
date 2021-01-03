@@ -12,7 +12,7 @@
 	branch = morty
 [submodule "meta-pedalpi"]
 	path = meta-pedalpi
-	url = https://github.com/rezzonics/meta-pedalpi
+	url = https://github.com/rezzonics/meta-pedalpi.git
 	branch = main 
 [submodule "meta-omega"]
 	path = meta-omega
@@ -41,6 +41,3 @@
 [submodule "meta-clang"]
 	path = meta-clang
 	url = https://github.com/kraj/meta-clang.git
-[submodule "Submod"]
-	url = https://github.com/rezzonics/meta-pedalpi.git
-	branch = main
